@@ -71,3 +71,29 @@ class FileStorage:
             calls the reload() method for deserialization from JSON to objects
         """
         self.reload()
+
+    def get(self, cls, id):
+        """ retrieves one object """
+        try:
+            obj_dict = {}
+            if cls:
+                obj_dict = FileStorage.__objects
+            return obj_dict[id]
+        except:
+            return None
+
+    def count(self, cls=None):
+        """ counts number of objects in storage """
+        if cls:
+            obj_dict = {}
+            obj_dict = FileStorage.__objects
+            return len(obj_dict)
+        else:
+            obj_list = []
+            for class_name in self.CNC:
+                if class_name == 'BaseModel':
+                    continue
+                obj_class = FileStorage.__objects
+                for item in obj_class:
+                    obj_list.append(item)
+            return len(obj_list)
