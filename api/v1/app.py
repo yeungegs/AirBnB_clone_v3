@@ -4,7 +4,7 @@ API for AirBnB_clone_v3
 """
 
 import os
-from flask import Flask
+from flask import Flask, jsonify
 app = Flask(__name__)
 from models import storage
 from api.v1.views import app_views
@@ -15,6 +15,13 @@ app.register_blueprint(app_views)
 def teardown(self):
     """ method to handle teardown """
     storage.close()
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    """ handles 404 errors """
+    status = {"error": "Not found"}
+    return jsonify(status)
 
 
 if __name__ == '__main__':
