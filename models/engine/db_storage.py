@@ -100,10 +100,10 @@ class DBStorage:
                 obj_dict[item.id] = item
             return len(obj_dict)
         else:
-            for class_name in self.CNC:
-                if class_name == 'BaseModel':
+            for cls_name in self.CNC:
+                if cls_name == 'BaseModel':
                     continue
-                obj_class = self.__session.query(self.CNC.get(class_name)).all()
+                obj_class = self.__session.query(self.CNC.get(cls_name)).all()
                 for item in obj_class:
                     obj_dict[item.id] = item
             return len(obj_dict)
