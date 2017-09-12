@@ -38,7 +38,6 @@ class BaseModel:
 
     def __init__(self, *args, **kwargs):
         """instantiation of new BaseModel Class"""
-
         if kwargs:
             self.__set_attributes(kwargs)
         else:
@@ -97,6 +96,7 @@ class BaseModel:
         for key, value in (self.__dict__).items():
             if key == '_sa_instance_state':
                 del key
+                continue
             if (self.__is_serializable(value)):
                 bm_dict[key] = value
             else:
