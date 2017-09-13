@@ -80,4 +80,3 @@ def state_put(state_id):
     storage.save()
     state = state.to_json()
     return jsonify(state), 200
-
