@@ -33,13 +33,14 @@ def state_get(state_id):
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def state_delete(state_id):
     """ handles DELETE method """
-    empty_dict = {}
-    state = storage.get("State", state_id)
-    if state is None:
+    try:
+        empty_dict = {}
+        state = storage.get("State", state_id)
+        storage.delete(state)
+        storage.save()
+        return jsonify(empty_dict), 200
+    except:
         abort(404)
-    storage.delete(state)
-    storage.save()
-    return jsonify(empty_dict), 200
 
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
@@ -78,3 +79,4 @@ def state_put(state_id):
     storage.save()
     state = state.to_json()
     return jsonify(state), 200
+
