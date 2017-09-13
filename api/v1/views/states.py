@@ -75,6 +75,7 @@ def state_put(state_id):
         ignore_keys = ["id", "created_at", "updated_at"]
         if key not in ignore_keys:
             state.bm_update(key, value)
+    state.save()
     storage.save()
     state = state.to_json()
     return jsonify(state), 200
