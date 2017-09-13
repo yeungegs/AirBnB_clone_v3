@@ -80,20 +80,24 @@ class FileStorage:
 
     def get(self, cls, id):
         """ retrieves one object """
-        try:
-            obj_dict = {}
-            if cls:
-                obj_dict = FileStorage.__objects
-            return obj_dict[id]
-        except:
-            return None
+        obj_dict = {}
+        obj = None
+        if cls:
+            obj_dict = FileStorage.__objects.items()
+            for key, value in obj_dict:
+                if key == id:
+                    obj = value
+            return obj
 
     def count(self, cls=None):
         """ counts number of objects in storage """
         if cls:
-            obj_dict = {}
-            obj_dict = FileStorage.__objects
-            return len(obj_dict)
+            obj_list = []
+            obj_dict = FileStorage.__objects.values()
+            for item in obj_dict:
+                if type(item).__name__ == cls:
+                    obj_list.append(item)
+            return len(obj_list)
         else:
             obj_list = []
             for class_name in self.CNC:

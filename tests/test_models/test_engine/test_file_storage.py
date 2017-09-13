@@ -11,6 +11,8 @@ import json
 import os
 
 User = models.user.User
+State = models.state.State
+City = models.city.City
 BaseModel = models.base_model.BaseModel
 FileStorage = engine.file_storage.FileStorage
 storage = models.storage
@@ -91,13 +93,15 @@ class TestBmFsInstances(unittest.TestCase):
 
     def test_storage_file_exists(self):
         """... checks proper FileStorage instantiation"""
-        os.remove(F)
+        if os.path.isfile(F):
+            os.remove(F)
         self.bm_obj.save()
         self.assertTrue(os.path.isfile(F))
 
     def test_obj_saved_to_file(self):
         """... checks proper FileStorage instantiation"""
-        os.remove(F)
+        if os.path.isfile(F):
+            os.remove(F)
         self.bm_obj.save()
         bm_id = self.bm_obj.id
         actual = 0
@@ -120,7 +124,8 @@ class TestBmFsInstances(unittest.TestCase):
 
     def test_reload(self):
         """... checks proper usage of reload function"""
-        os.remove(F)
+        if os.path.isfile(F):
+            os.remove(F)
         self.bm_obj.save()
         bm_id = self.bm_obj.id
         actual = 0
@@ -134,7 +139,8 @@ class TestBmFsInstances(unittest.TestCase):
 
     def test_save_reload_class(self):
         """... checks proper usage of class attribute in file storage"""
-        os.remove(F)
+        if os.path.isfile(F):
+            os.remove(F)
         self.bm_obj.save()
         bm_id = self.bm_obj.id
         actual = 0
@@ -166,14 +172,16 @@ class TestUserFsInstances(unittest.TestCase):
     @unittest.skipIf(storage_type == 'db', 'skip if environ is db')
     def test_storage_file_exists(self):
         """... checks proper FileStorage instantiation"""
-        os.remove(F)
+        if os.path.isfile(F):
+            os.remove(F)
         self.user.save()
         self.assertTrue(os.path.isfile(F))
 
     @unittest.skipIf(storage_type == 'db', 'skip if environ is db')
     def test_obj_saved_to_file(self):
         """... checks proper FileStorage instantiation"""
-        os.remove(F)
+        if os.path.isfile(F):
+            os.remove(F)
         self.user.save()
         u_id = self.user.id
         actual = 0
@@ -187,7 +195,8 @@ class TestUserFsInstances(unittest.TestCase):
     @unittest.skipIf(storage_type == 'db', 'skip if environ is db')
     def test_reload(self):
         """... checks proper usage of reload function"""
-        os.remove(F)
+        if os.path.isfile(F):
+            os.remove(F)
         self.bm_obj.save()
         u_id = self.bm_obj.id
         actual = 0
@@ -199,6 +208,51 @@ class TestUserFsInstances(unittest.TestCase):
                 actual = 1
         self.assertTrue(1 == actual)
 
+
+@unittest.skipIf(storage_type == 'db', 'skip if environ is not db')
+class TestGetCountFS(unittest.TestCase):
+    """testing get and count methods"""
+
+    @classmethod
+    def setUpClass(cls):
+        print('\n\n.................................')
+        print('...... Testing Get and Count ......')
+        print('.......... FS Methods ..........')
+        print('.................................\n\n')
+
+    def setUp(self):
+        """initializes new state and cities for testing"""
+        if os.path.isfile(F):
+            os.remove(F)
+        self.state = State()
+        self.state.name = 'California'
+        self.state.save()
+        self.city1 = City()
+        self.city1.name = 'Fremont'
+        self.city1.state_id = self.state.id
+        self.city1.save()
+        self.city2 = City()
+        self.city2.name = 'San_Francisco'
+        self.city2.state_id = self.state.id
+        self.city2.save()
+
+    def test_get(self):
+        """check if get method returns state"""
+        real_state = storage.get("State", self.state.id)
+        fake_state = storage.get("State", "12345")
+
+        self.assertEqual(real_state, self.state)
+        self.assertNotEqual(fake_state, self.state)
+
+    def test_count(self):
+        """checks if count method returns correct numbers"""
+        state_count = storage.count("State")
+        city_count = storage.count("City")
+        place_count = storage.count("Place")
+
+        self.assertEqual(state_count, 1)
+        self.assertEqual(city_count, 2)
+        self.assertEqual(place_count, 0)
 
 if __name__ == '__main__':
     unittest.main
