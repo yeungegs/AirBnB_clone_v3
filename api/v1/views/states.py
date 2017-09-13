@@ -42,6 +42,7 @@ def state_delete(state_id):
     except:
         abort(404)
 
+
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def state_post():
     """ handles POST method """
@@ -51,11 +52,11 @@ def state_post():
         abort(400, "Not a JSON")
     if 'name' not in data:
         abort(400, "Missing name")
-    state = State()
-    state.name = data['name']
-    storage.save()
+    state = State(**data)
+    state.save()
     state = state.to_json()
     return jsonify(state), 201
+
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
 def state_put(state_id):
