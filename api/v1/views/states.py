@@ -33,23 +33,23 @@ def state_get(state_id):
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def state_delete(state_id):
     """ handles DELETE method """
-    empty_dict = {}
-    state = storage.get("State", state_id)
-    if state is None:
+    try:
+        empty_dict = {}
+        state = storage.get("State", state_id)
+        storage.delete(state)
+        storage.save()
+        return jsonify(empty_dict), 200
+    except:
         abort(404)
-    storage.delete(state)
-    storage.save()
-    return jsonify(empty_dict), 200
 
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def state_post():
     """ handles POST method """
-    try:
+    if request.headers['Content-Type'] == 'application/json':
         data = request.get_json()
-    except:
+    else:
         abort(400, "Not a JSON")
-
     if 'name' not in data:
         abort(400, "Missing name")
     state = State(**data)
@@ -62,13 +62,13 @@ def state_post():
 def state_put(state_id):
     """ handles PUT method """
     try:
-        data = request.get_json()
+        state = storage.get("State", state_id)
     except:
-        abort(400, "Not a JSON")
-
-    state = storage.get("State", state_id)
-    if state is None:
         abort(404)
+    if request.headers['Content-Type'] == 'application/json':
+        data = request.get_json()
+    else:
+        abort(400, "Not a JSON")
     for key, value in data.items():
         ignore_keys = ["id", "created_at", "updated_at"]
         if key not in ignore_keys:
