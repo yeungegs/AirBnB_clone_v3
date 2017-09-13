@@ -306,6 +306,7 @@ class TestGetCountDB(unittest.TestCase):
 
     def setUp(self):
         """initializes new state and cities for testing"""
+        
         self.state = State()
         self.state.name = 'California'
         self.state.save()
@@ -332,8 +333,8 @@ class TestGetCountDB(unittest.TestCase):
         city_count = storage.count("City")
         place_count = storage.count("Place")
 
-        self.assertEqual(state_count, 3)
-        self.assertEqual(city_count, 4)
+        self.assertEqual(state_count, 1)
+        self.assertEqual(city_count, 2)
         self.assertEqual(place_count, 0)
 
 if __name__ == '__main__':
