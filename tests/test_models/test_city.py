@@ -51,10 +51,6 @@ class TestCityInstances(unittest.TestCase):
         """initializes new city for testing"""
         self.city = City()
 
-    def tearDown(self):
-        """removes City instance"""
-        self.city.delete()
-
     def test_instantiation(self):
         """... checks if City is properly instantiated"""
         self.assertIsInstance(self.city, City)
