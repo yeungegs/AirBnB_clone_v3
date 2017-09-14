@@ -48,7 +48,7 @@ def review_delete(review_id):
 
 @app_views.route('/places/<place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
-def review_post():
+def review_post(place_id):
     """ handles POST method """
     place = storage.get("Place", place_id)
     if place is None:
@@ -64,6 +64,7 @@ def review_post():
     if 'text' not in data:
         abort(400, "Missing text")
     review = Review(**data)
+    review.place_id = place_id
     review.save()
     review = review.to_json()
     return jsonify(review), 201
