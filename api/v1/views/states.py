@@ -44,15 +44,13 @@ def state_delete(state_id):
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def state_post():
     """ handles POST method """
-    try:
-        data = request.get_json()
-    except:
+    data = request.get_json()
+    if data is None:
         abort(400, "Not a JSON")
     if 'name' not in data:
         abort(400, "Missing name")
     state = State(**data)
     state.save()
-    storage.save()
     state = state.to_json()
     return jsonify(state), 201
 
@@ -63,15 +61,13 @@ def state_put(state_id):
     state = storage.get("State", state_id)
     if state is None:
         abort(404)
-    try:
-        data = request.get_json()
-    except:
+    data = request.get_json()
+    if data is None:
         abort(400, "Not a JSON")
     for key, value in data.items():
         ignore_keys = ["id", "created_at", "updated_at"]
         if key not in ignore_keys:
             state.bm_update(key, value)
     state.save()
-    storage.save()
     state = state.to_json()
     return jsonify(state), 200
