@@ -58,7 +58,7 @@ def review_post():
         abort(400, "Not a JSON")
     if 'user_id' not in data:
         abort(400, "Missing user_id")
-    user = storage.get("User", user_id)
+    user = storage.get("User", data['user_id'])
     if user is None:
         abort(404)
     if 'text' not in data:
