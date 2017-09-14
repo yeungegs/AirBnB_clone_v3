@@ -5,7 +5,7 @@ View for Amenities that handles all RESTful API actions
 
 from flask import jsonify, request, abort
 from models import storage
-from models.amenities import Amenity
+from models.amenity import Amenity
 from api.v1.views import app_views
 
 
