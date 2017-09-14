@@ -66,6 +66,18 @@ class TestDBStorageDocs(unittest.TestCase):
         actual = DBStorage.delete.__doc__
         self.assertEqual(expected, actual)
 
+    def test_doc_get(self):
+        """... documentation for get function"""
+        expected = ' retrieves one object '
+        actual = DBStorage.get.__doc__
+        self.assertEqual(expected, actual)
+
+    def test_doc_count(self):
+        """... documentation for count function"""
+        expected = ' counts number of objects in storage '
+        actual = DBStorage.count.__doc__
+        self.assertEqual(expected, actual)
+
 
 @unittest.skipIf(storage_type != 'db', 'skip if environ is not db')
 class TestStateDBInstances(unittest.TestCase):
@@ -306,7 +318,6 @@ class TestGetCountDB(unittest.TestCase):
 
     def setUp(self):
         """initializes new state and cities for testing"""
-        
         self.state = State()
         self.state.name = 'California'
         self.state.save()
