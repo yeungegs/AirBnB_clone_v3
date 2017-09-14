@@ -265,7 +265,6 @@ class TestGetCountFS(unittest.TestCase):
         city_count = storage.count("City")
         place_count = storage.count("Place")
         all_count = storage.count(None)
-        print(storage.all())
 
         self.assertEqual(state_count, 1)
         self.assertEqual(city_count, 2)
