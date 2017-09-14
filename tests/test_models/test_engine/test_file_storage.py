@@ -70,6 +70,18 @@ class TestFileStorageDocs(unittest.TestCase):
         actual = FileStorage.reload.__doc__
         self.assertEqual(expected, actual)
 
+    def test_doc_get(self):
+        """... documentation for get function"""
+        expected = ' retrieves one object '
+        actual = DBStorage.get.__doc__
+        self.assertEqual(expected, actual)
+
+    def test_doc_count(self):
+        """... documentation for count function"""
+        expected = ' counts number of objects in storage '
+        actual = DBStorage.count.__doc__
+        self.assertEqual(expected, actual)
+
 
 @unittest.skipIf(storage_type == 'db', 'skip if environ is db')
 class TestBmFsInstances(unittest.TestCase):
