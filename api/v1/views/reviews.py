@@ -46,7 +46,8 @@ def review_delete(review_id):
     return jsonify(empty_dict), 200
 
 
-@app_views.route('/places/<place_id>/reviews', methods=['POST'], strict_slashes=False)
+@app_views.route('/places/<place_id>/reviews', methods=['POST'],
+                 strict_slashes=False)
 def review_post():
     """ handles POST method """
     place = storage.get("Place", place_id)
