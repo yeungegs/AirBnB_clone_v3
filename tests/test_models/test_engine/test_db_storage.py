@@ -347,10 +347,10 @@ class TestGetCountDB(unittest.TestCase):
         place_count = storage.count("Place")
         all_count = storage.count("")
 
-        self.assertEqual(state_count, 1)
-        self.assertEqual(city_count, 2)
+        self.assertEqual(state_count, 3)
+        self.assertEqual(city_count, 4)
         self.assertEqual(place_count, 0)
-        self.assertEqual(all_count, 3)
+        self.assertEqual(all_count, 7)
 
 if __name__ == '__main__':
     unittest.main
