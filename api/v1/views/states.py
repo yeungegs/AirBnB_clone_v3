@@ -22,12 +22,11 @@ def states_all():
 @app_views.route('/states/<state_id>', methods=['GET'])
 def state_get(state_id):
     """ handles GET method """
-    try:
-        state = storage.get("State", state_id)
-        state = state.to_json()
-        return jsonify(state)
-    except:
+    state = storage.get("State", state_id)
+    if state is None:
         abort(404)
+    state = state.to_json()
+    return jsonify(state)
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'])
@@ -49,7 +48,6 @@ def state_post():
         data = request.get_json()
     except:
         abort(400, "Not a JSON")
-
     if 'name' not in data:
         abort(400, "Missing name")
     state = State(**data)
@@ -65,12 +63,10 @@ def state_put(state_id):
     state = storage.get("State", state_id)
     if state is None:
         abort(404)
-
     try:
         data = request.get_json()
     except:
         abort(400, "Not a JSON")
-
     for key, value in data.items():
         ignore_keys = ["id", "created_at", "updated_at"]
         if key not in ignore_keys:
