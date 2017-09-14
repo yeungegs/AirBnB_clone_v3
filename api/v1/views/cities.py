@@ -9,7 +9,8 @@ from models.city import City
 from api.v1.views import app_views
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
+@app_views.route('/states/<state_id>/cities', methods=['GET'],
+                 strict_slashes=False)
 def cities_all(state_id):
     """ returns list of all City objects linked to a given State """
     state = storage.get("State", state_id)
@@ -45,9 +46,13 @@ def city_delete(city_id):
     return jsonify(empty_dict), 200
 
 
-@app_views.route('/states/<state_id>/cities', methods=['POST'], strict_slashes=False)
+@app_views.route('/states/<state_id>/cities', methods=['POST'],
+                 strict_slashes=False)
 def city_post(state_id):
     """ handles POST method """
+    state = storage.get("State", state_id)
+    if state is None:
+        abort(404)
     data = request.get_json()
     if data is None:
         abort(400, "Not a JSON")
