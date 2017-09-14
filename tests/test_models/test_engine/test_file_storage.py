@@ -78,7 +78,7 @@ class TestFileStorageDocs(unittest.TestCase):
 
     def test_doc_count(self):
         """... documentation for count function"""
-        expected = ' counts number of objects in storage '
+        expected = ' counts number of objects of a class in storage '
         actual = FileStorage.count.__doc__
         self.assertEqual(expected, actual)
 
@@ -270,7 +270,7 @@ class TestGetCountFS(unittest.TestCase):
         self.assertEqual(state_count, 1)
         self.assertEqual(city_count, 2)
         self.assertEqual(place_count, 0)
-        self.assertEqual(all_count, 3)
+        self.assertEqual(all_count, 18)
 
 if __name__ == '__main__':
     unittest.main
