@@ -73,13 +73,13 @@ class TestFileStorageDocs(unittest.TestCase):
     def test_doc_get(self):
         """... documentation for get function"""
         expected = ' retrieves one object '
-        actual = DBStorage.get.__doc__
+        actual = FileStorage.get.__doc__
         self.assertEqual(expected, actual)
 
     def test_doc_count(self):
         """... documentation for count function"""
         expected = ' counts number of objects in storage '
-        actual = DBStorage.count.__doc__
+        actual = FileStorage.count.__doc__
         self.assertEqual(expected, actual)
 
 
