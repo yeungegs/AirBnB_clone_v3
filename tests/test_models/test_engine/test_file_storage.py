@@ -236,6 +236,7 @@ class TestGetCountFS(unittest.TestCase):
         """initializes new state and cities for testing"""
         if os.path.isfile(F):
             os.remove(F)
+        storage.reload()
         self.state = State()
         self.state.name = 'California'
         self.state.save()
@@ -263,7 +264,8 @@ class TestGetCountFS(unittest.TestCase):
         state_count = storage.count("State")
         city_count = storage.count("City")
         place_count = storage.count("Place")
-        all_count = storage.count("")
+        all_count = storage.count(None)
+        print(storage.all())
 
         self.assertEqual(state_count, 1)
         self.assertEqual(city_count, 2)
