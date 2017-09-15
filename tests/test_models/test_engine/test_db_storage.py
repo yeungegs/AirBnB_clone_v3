@@ -81,7 +81,7 @@ class TestDBStorageDocs(unittest.TestCase):
     def test_doc_count(self):
         """... testing length version of count function
         """
-        expected = 37
+        expected = 293
         actual = len(DBStorage.count.__doc__)
         self.assertEqual(expected, actual)
 
