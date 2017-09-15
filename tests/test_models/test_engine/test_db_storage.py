@@ -72,12 +72,6 @@ class TestDBStorageDocs(unittest.TestCase):
         actual = DBStorage.get.__doc__
         self.assertEqual(expected, actual)
 
-    """def test_doc_count(self):
-        ... documentation for count function
-        expected = ' counts number of objects in storage '
-        actual = DBStorage.count.__doc__
-        self.assertEqual(expected, actual)"""
-
     def test_doc_count(self):
         """... testing length version of count function
         """
